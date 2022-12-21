@@ -99,12 +99,21 @@ export default function App() {
 			setSurveyDone(true);
 		}
 	};
-	
+
+	const restartSurvey = () => {
+		window.location.reload();
+	}
 	return (
 		<div className='app'>
 			{surveyDone ? (
 				<div className='score-section'>
-					Thank you for finishing the survey
+					<div>
+						Thank you for finishing the survey
+						{JSON.stringify(answer)}
+					</div>
+					<div>
+						<button onClick={() => restartSurvey()}>Restart</button>
+					</div>
 				</div>
 			) : (
 				<>
