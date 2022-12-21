@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 
@@ -44,14 +44,27 @@ export default function App() {
 	];
 
 	const [currentQuestion, setCurrentQuestion] = useState(0);
+	const [answer, setAnswer] = useState([])
 	const [surveyDone, setSurveyDone] = useState(false);
-	const [score, setScore] = useState(0);
+
+	useEffect(() => {
+		const currentQuestionId = JSON.parse(localStorage.getItem('currentQuestion'))
+		if (currentQuestionId) {
+			setCurrentQuestion(currentQuestionId)
+		}
+	}, [])
+
+	useEffect(() => {
+		localStorage.setItem('answers', JSON.stringify(answer))
+		localStorage.setItem('currentQuestion', JSON.stringify(currentQuestion))
+
+		if (currentQuestion + 1 === questions.length) {
+			localStorage.clear()
+		}
+	}, [answer, currentQuestion])
 
 	const handleAnswerOptionClick = (answerOption) => {
-		// if (isCorrect) {
-		// 	setScore(score + 1);
-		// }
-    
+    setAnswer(oldValue => [...oldValue, answerOption])
 
 		const nextQuestion = currentQuestion + 1;
 		if (nextQuestion < questions.length) {
@@ -65,6 +78,7 @@ export default function App() {
 			{surveyDone ? (
 				<div className='score-section'>
 					Thank you for finishing the survey
+					{JSON.stringify(answer)}
 				</div>
 			) : (
 				<>
