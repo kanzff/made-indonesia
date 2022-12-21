@@ -1,45 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
+import { questions } from './questions';
 
 export default function App() {
-	const questions = [
-		{
-      id: 1,
-			questionText: 'What is the capital of France?',
-			answerOptions: [
-				{ answerText: 'New York'},
-				{ answerText: 'London'},
-				{ answerText: 'Paris'},
-			],
-		},
-		{
-      id: 2,
-			questionText: 'Who is CEO of Tesla?',
-			answerOptions: [
-				{ answerText: 'Jeff Bezos'},
-				{ answerText: 'Elon Musk'},
-				{ answerText: 'Bill Gates'},
-			],
-		},
-		{
-      id: 3,
-			questionText: 'The iPhone was created by which company?',
-			answerOptions: [
-				{ answerText: 'Apple'},
-				{ answerText: 'Intel'},
-				{ answerText: 'Amazon'},
-			],
-		},
-		{
-      id: 4,
-			questionText: 'How many Harry Potter books are there?',
-			answerOptions: [
-				{ answerText: '4'},
-				{ answerText: '6'},
-				{ answerText: '7'},
-			],
-		},
-	];
 
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 	const [counter, setCounter] = useState(600)
@@ -105,19 +68,19 @@ export default function App() {
 		<div className='app'>
 			<div className='container justify-content-center fw-bold'>
 				{surveyDone ? (
-					<div className='row p-4'>
+					<div className='row p-4 message'>
 						<div className='col score-section p-4 mb-4 bg-light rounded-3 fs-5'>
 							<div>
 								Thank you for filling the survey
-								{JSON.stringify(answer)}
+								{/* {JSON.stringify(answer)} */}
 							</div>
 						</div>
-						<button className='btn btn-light rounded fs-1' onClick={() => restartSurvey()}>Restart</button>
+						<button className='button rounded fs-1' onClick={() => restartSurvey()}>Restart</button>
 					</div>
 				) : (
-					<div className='row p-4 question'>
-						<div className='col p-4 mb-4 bg-light rounded-3 question-body fs-5'>
-							<div className='row fs-1'>
+					<div className='row p-4'>
+						<div className='col p-4 mb-4 bg-light rounded-3 question fs-5'>
+							<div className='row question-head fs-1'>
 								<div className='col question-count'>
 									<p>Q{currentQuestion + 1}</p>
 								</div>
@@ -137,7 +100,9 @@ export default function App() {
 								})}
 							</div>
 						</div>
-						<button className='btn btn-light rounded fs-1' onClick={() => handleAnswerOptionClick()}>Next</button>
+						{/* <div className='button'> */}
+							<button className='button rounded fs-1' onClick={() => handleAnswerOptionClick()}>Next</button>
+						{/* </div> */}
 					</div>
 				)}
 			</div>
