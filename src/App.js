@@ -44,13 +44,39 @@ export default function App() {
 	];
 
 	const [currentQuestion, setCurrentQuestion] = useState(0);
+	const [counter, setCounter] = useState(600)
 	const [answer, setAnswer] = useState([])
 	const [surveyDone, setSurveyDone] = useState(false);
+	const savedCounter = JSON.parse(localStorage.getItem('counter'))
+	const currentQuestionId = JSON.parse(localStorage.getItem('currentQuestion'))
+	const savedAnswer = JSON.parse(localStorage.getItem('answers'))
 
 	useEffect(() => {
-		const currentQuestionId = JSON.parse(localStorage.getItem('currentQuestion'))
+    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+		if (counter === 0) {
+			setSurveyDone(true)
+		}
+		// const savedCounter = JSON.parse(localStorage.getItem('counter'))
+		if (counter <= savedCounter) {
+			localStorage.setItem('counter', JSON.stringify(counter))
+		}
+  }, [counter]);
+
+	useEffect(() => {
+		// const currentQuestionId = JSON.parse(localStorage.getItem('currentQuestion'))
 		if (currentQuestionId) {
 			setCurrentQuestion(currentQuestionId)
+		}
+		// const savedAnswer = JSON.parse(localStorage.getItem('answers'))
+		if (savedAnswer) {
+			setAnswer(savedAnswer)
+		}
+		// const savedCounter = JSON.parse(localStorage.getItem('counter'))
+		if (savedCounter) {
+			setCounter(savedCounter)
+		}
+		if (!savedCounter) {
+			localStorage.setItem('counter', JSON.stringify(counter))
 		}
 	}, [])
 
@@ -58,7 +84,7 @@ export default function App() {
 		localStorage.setItem('answers', JSON.stringify(answer))
 		localStorage.setItem('currentQuestion', JSON.stringify(currentQuestion))
 
-		if (currentQuestion + 1 === questions.length) {
+		if (currentQuestion + 1 === questions.length && surveyDone) {
 			localStorage.clear()
 		}
 	}, [answer, currentQuestion])
@@ -73,16 +99,19 @@ export default function App() {
 			setSurveyDone(true);
 		}
 	};
+	
 	return (
 		<div className='app'>
 			{surveyDone ? (
 				<div className='score-section'>
 					Thank you for finishing the survey
-					{JSON.stringify(answer)}
 				</div>
 			) : (
 				<>
 					<div className='question-section'>
+						<div className='counter'>
+							<p>{counter}</p>
+						</div>
 						<div className='question-count'>
 							<span>Question {currentQuestion + 1}</span>/{questions.length}
 						</div>
