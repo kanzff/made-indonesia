@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 
 export default function App() {
 	const questions = [
@@ -104,46 +103,46 @@ export default function App() {
 	}
 	return (
 		<div className='app'>
-			<Container className='d-flex justify-content-center'>
+			<div className='container justify-content-center fw-bold'>
 				{surveyDone ? (
-					<Row>
-						<div className='score-section'>
+					<div className='row'>
+						<div className='col score-section'>
 							<div>
 								Thank you for filling the survey
 								{JSON.stringify(answer)}
 							</div>
-							<div>
+							<div className='col'>
 								<button onClick={() => restartSurvey()}>Restart</button>
 							</div>
 						</div>
-					</Row>
+					</div>
 				) : (
-					<Row className='question'>
-						<Col className='bg-white rounded-3 question-body'>
-							<Row>
-								<Col className='question-count'>
+					<div className='row p-4 question'>
+						<div className='col p-4 bg-white rounded-3 question-body fs-5'>
+							<div className='row fs-1'>
+								<div className='col question-count'>
 									<p>Q{currentQuestion + 1}</p>
-								</Col>
-								<Col className='counter text-align-center'>
+								</div>
+								<div className='col counter text-end'>
 									<p>{counter}</p>
-								</Col>
-							</Row>
+								</div>
+							</div>
 							<div className='question-text'>{questions[currentQuestion].questionText}</div>
 							<div className='radio-section'>
 								{questions[currentQuestion].answerOptions.map((answerOption) => {
 									return (
 										<div>
 											<input type='radio' name='answer' value={answerOption} onChange={() => onChangeValue(answerOption)} id={answerOption.answerText}/>
-											<label for={answerOption.answerText}>{answerOption.answerText}</label>
+											<label className='p-2' for={answerOption.answerText}>{answerOption.answerText}</label>
 										</div>
 									)
 								})}
-								<button onClick={() => handleAnswerOptionClick()}>Next</button>
+								<button className='rounded' onClick={() => handleAnswerOptionClick()}>Next</button>
 							</div>
-						</Col>
-					</Row>
+						</div>
+					</div>
 				)}
-			</Container>
+			</div>
 		</div>
 	);
 }

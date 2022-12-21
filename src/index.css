@@ -11,17 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
-* {font-size: 1.1rem;}
+/* * {
+    font-size: 1.1rem;
+    font-weight: bold;
+  } */
 
 .app {
   height: 100vh;
   background: rgb(197, 138, 221);
 }
 
-.question {
-  padding: 3rem;
+/* .question {
+  margin-top: 20px;
 }
 
 .question-body {
   padding: 1rem;
-}
+} */
