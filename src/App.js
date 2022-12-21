@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
 export default function App() {
 	const questions = [
@@ -55,22 +56,18 @@ export default function App() {
 		if (counter === 0) {
 			setSurveyDone(true)
 		}
-		// const savedCounter = JSON.parse(localStorage.getItem('counter'))
 		if (counter <= savedCounter) {
 			localStorage.setItem('counter', JSON.stringify(counter))
 		}
   }, [counter]);
 
 	useEffect(() => {
-		// const currentQuestionId = JSON.parse(localStorage.getItem('currentQuestion'))
 		if (currentQuestionId) {
 			setCurrentQuestion(currentQuestionId)
 		}
-		// const savedAnswer = JSON.parse(localStorage.getItem('answers'))
 		if (savedAnswer) {
 			setAnswer(savedAnswer)
 		}
-		// const savedCounter = JSON.parse(localStorage.getItem('counter'))
 		if (savedCounter) {
 			setCounter(savedCounter)
 		}
@@ -107,45 +104,46 @@ export default function App() {
 	}
 	return (
 		<div className='app'>
+			<Container className='d-flex justify-content-center'>
 				{surveyDone ? (
-					<div className='score-section'>
-						<div>
-							Thank you for finishing the survey
-							{JSON.stringify(answer)}
+					<Row>
+						<div className='score-section'>
+							<div>
+								Thank you for filling the survey
+								{JSON.stringify(answer)}
+							</div>
+							<div>
+								<button onClick={() => restartSurvey()}>Restart</button>
+							</div>
 						</div>
-						<div>
-							<button onClick={() => restartSurvey()}>Restart</button>
-						</div>
-					</div>
+					</Row>
 				) : (
-					<>
-						<div className='question-section'>
-							<div className='counter'>
-								<p>{counter}</p>
-							</div>
-							<div className='question-count'>
-								<span>Question {currentQuestion + 1}</span>/{questions.length}
-							</div>
+					<Row className='question'>
+						<Col className='bg-white rounded-3 question-body'>
+							<Row>
+								<Col className='question-count'>
+									<p>Q{currentQuestion + 1}</p>
+								</Col>
+								<Col className='counter text-align-center'>
+									<p>{counter}</p>
+								</Col>
+							</Row>
 							<div className='question-text'>{questions[currentQuestion].questionText}</div>
-						</div>
-						{/* <div className='answer-section'>
-							{questions[currentQuestion].answerOptions.map((answerOption) => (
-								<button onClick={() => handleAnswerOptionClick(answerOption)}>{answerOption.answerText}</button>
-							))}
-						</div> */}
-						<div className='radio-section'>
-							{questions[currentQuestion].answerOptions.map((answerOption) => {
-								return (
-									<div>
-										<input type='radio' name='answer' value={answerOption} onChange={() => onChangeValue(answerOption)} id={answerOption.answerText}/>
-										<label for={answerOption.answerText}>{answerOption.answerText}</label>
-									</div>
-								)
-							})}
-							<button onClick={() => handleAnswerOptionClick()}>Next</button>
-						</div>
-					</>
+							<div className='radio-section'>
+								{questions[currentQuestion].answerOptions.map((answerOption) => {
+									return (
+										<div>
+											<input type='radio' name='answer' value={answerOption} onChange={() => onChangeValue(answerOption)} id={answerOption.answerText}/>
+											<label for={answerOption.answerText}>{answerOption.answerText}</label>
+										</div>
+									)
+								})}
+								<button onClick={() => handleAnswerOptionClick()}>Next</button>
+							</div>
+						</Col>
+					</Row>
 				)}
+			</Container>
 		</div>
 	);
 }

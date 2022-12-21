@@ -11,8 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+* {font-size: 1.1rem;}
 
 .app {
   height: 100vh;
   background: rgb(197, 138, 221);
+}
+
+.question {
+  padding: 3rem;
+}
+
+.question-body {
+  padding: 1rem;
 }
