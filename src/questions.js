@@ -1,15 +1,6 @@
 export const questions = [
   {
     id: 1,
-    questionText: 'What is your age range?',
-    answerOptions: [
-      { answerText: '30+'},
-      { answerText: '18-30'},
-      { answerText: 'Less than 18'},
-    ],
-  },
-  {
-    id: 2,
     questionText: 'How often do you use the internet?',
     answerOptions: [
       { answerText: '12 hr/day'},
@@ -18,8 +9,17 @@ export const questions = [
     ],
   },
   {
+    id: 2,
+    questionText: 'Do you have unlimited interned access?',
+    answerOptions: [
+      { answerText: 'Yes'},
+      { answerText: 'No'},
+      { answerText: 'Don\'t know'},
+    ],
+  },
+  {
     id: 3,
-    questionText: 'Do you use social media often?',
+    questionText: 'Do you use social media platform often?',
     answerOptions: [
       { answerText: 'Often'},
       { answerText: 'Sometimes'},

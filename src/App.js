@@ -75,14 +75,16 @@ export default function App() {
 								{/* {JSON.stringify(answer)} */}
 							</div>
 						</div>
-						<button className='button rounded fs-1' onClick={() => restartSurvey()}>Restart</button>
+						<div className='d-flex btn-container-2 flex-column-reverse p-0'>
+							<button className='button rounded fs-1' onClick={() => restartSurvey()}>Restart</button>
+						</div>
 					</div>
 				) : (
 					<div className='row p-4'>
 						<div className='col p-4 mb-4 bg-light rounded-3 question fs-5'>
 							<div className='row question-head fs-1'>
 								<div className='col question-count'>
-									<p>Q{currentQuestion + 1}</p>
+									<p>Q{currentQuestion + 1}/{questions.length}</p>
 								</div>
 								<div className='col counter text-end'>
 									<p>{counter}</p>
@@ -100,9 +102,9 @@ export default function App() {
 								})}
 							</div>
 						</div>
-						{/* <div className='button'> */}
+						<div className='d-flex btn-container flex-column-reverse p-0'>
 							<button className='button rounded fs-1' onClick={() => handleAnswerOptionClick()}>Next</button>
-						{/* </div> */}
+						</div>
 					</div>
 				)}
 			</div>

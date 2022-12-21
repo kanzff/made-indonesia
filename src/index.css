@@ -12,10 +12,13 @@
   color: #b793f1
 }
 
-/* .button {
-  background-color: #5722ac;
-  color: #f8f9fa;
-} */
+.btn-container {
+  height: 50vh;
+}
+
+.btn-container-2 {
+  height: 73vh;
+}
 
 .button {
   position: relative;
@@ -51,4 +54,8 @@
 
 input[type=radio] {
   accent-color: #5722ac;
+}
+
+.container {
+  height: 100%;
 }
