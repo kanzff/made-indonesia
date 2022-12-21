@@ -1,7 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'
-
 
 export default function App() {
 	const questions = [
@@ -9,36 +7,36 @@ export default function App() {
       id: 1,
 			questionText: 'What is the capital of France?',
 			answerOptions: [
-				{ answerText: 'New York', isCorrect: false },
-				{ answerText: 'London', isCorrect: false },
-				{ answerText: 'Paris', isCorrect: true },
+				{ answerText: 'New York'},
+				{ answerText: 'London'},
+				{ answerText: 'Paris'},
 			],
 		},
 		{
       id: 2,
 			questionText: 'Who is CEO of Tesla?',
 			answerOptions: [
-				{ answerText: 'Jeff Bezos', isCorrect: false },
-				{ answerText: 'Elon Musk', isCorrect: true },
-				{ answerText: 'Bill Gates', isCorrect: false },
+				{ answerText: 'Jeff Bezos'},
+				{ answerText: 'Elon Musk'},
+				{ answerText: 'Bill Gates'},
 			],
 		},
 		{
       id: 3,
 			questionText: 'The iPhone was created by which company?',
 			answerOptions: [
-				{ answerText: 'Apple', isCorrect: true },
-				{ answerText: 'Intel', isCorrect: false },
-				{ answerText: 'Amazon', isCorrect: false },
+				{ answerText: 'Apple'},
+				{ answerText: 'Intel'},
+				{ answerText: 'Amazon'},
 			],
 		},
 		{
       id: 4,
 			questionText: 'How many Harry Potter books are there?',
 			answerOptions: [
-				{ answerText: '4', isCorrect: false },
-				{ answerText: '6', isCorrect: false },
-				{ answerText: '7', isCorrect: true },
+				{ answerText: '4'},
+				{ answerText: '6'},
+				{ answerText: '7'},
 			],
 		},
 	];
@@ -47,6 +45,7 @@ export default function App() {
 	const [counter, setCounter] = useState(600)
 	const [answer, setAnswer] = useState([])
 	const [surveyDone, setSurveyDone] = useState(false);
+	const [selectedAnswer, setSelectedAnswer] = useState({})
 	const savedCounter = JSON.parse(localStorage.getItem('counter'))
 	const currentQuestionId = JSON.parse(localStorage.getItem('currentQuestion'))
 	const savedAnswer = JSON.parse(localStorage.getItem('answers'))
@@ -89,8 +88,8 @@ export default function App() {
 		}
 	}, [answer, currentQuestion])
 
-	const handleAnswerOptionClick = (answerOption) => {
-    setAnswer(oldValue => [...oldValue, answerOption])
+	const handleAnswerOptionClick = () => {
+    setAnswer(oldValue => [...oldValue, selectedAnswer])
 
 		const nextQuestion = currentQuestion + 1;
 		if (nextQuestion < questions.length) {
@@ -99,40 +98,54 @@ export default function App() {
 			setSurveyDone(true);
 		}
 	};
+	const onChangeValue = (ans) => {
+		setSelectedAnswer(ans)
+  }
 
 	const restartSurvey = () => {
 		window.location.reload();
 	}
 	return (
 		<div className='app'>
-			{surveyDone ? (
-				<div className='score-section'>
-					<div>
-						Thank you for finishing the survey
-						{JSON.stringify(answer)}
-					</div>
-					<div>
-						<button onClick={() => restartSurvey()}>Restart</button>
-					</div>
-				</div>
-			) : (
-				<>
-					<div className='question-section'>
-						<div className='counter'>
-							<p>{counter}</p>
+				{surveyDone ? (
+					<div className='score-section'>
+						<div>
+							Thank you for finishing the survey
+							{JSON.stringify(answer)}
 						</div>
-						<div className='question-count'>
-							<span>Question {currentQuestion + 1}</span>/{questions.length}
+						<div>
+							<button onClick={() => restartSurvey()}>Restart</button>
 						</div>
-						<div className='question-text'>{questions[currentQuestion].questionText}</div>
 					</div>
-					<div className='answer-section'>
-						{questions[currentQuestion].answerOptions.map((answerOption) => (
-							<button onClick={() => handleAnswerOptionClick(answerOption)}>{answerOption.answerText}</button>
-						))}
-					</div>
-				</>
-			)}
+				) : (
+					<>
+						<div className='question-section'>
+							<div className='counter'>
+								<p>{counter}</p>
+							</div>
+							<div className='question-count'>
+								<span>Question {currentQuestion + 1}</span>/{questions.length}
+							</div>
+							<div className='question-text'>{questions[currentQuestion].questionText}</div>
+						</div>
+						{/* <div className='answer-section'>
+							{questions[currentQuestion].answerOptions.map((answerOption) => (
+								<button onClick={() => handleAnswerOptionClick(answerOption)}>{answerOption.answerText}</button>
+							))}
+						</div> */}
+						<div className='radio-section'>
+							{questions[currentQuestion].answerOptions.map((answerOption) => {
+								return (
+									<div>
+										<input type='radio' name='answer' value={answerOption} onChange={() => onChangeValue(answerOption)} id={answerOption.answerText}/>
+										<label for={answerOption.answerText}>{answerOption.answerText}</label>
+									</div>
+								)
+							})}
+							<button onClick={() => handleAnswerOptionClick()}>Next</button>
+						</div>
+					</>
+				)}
 		</div>
 	);
 }
